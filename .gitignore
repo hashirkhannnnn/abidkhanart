@@ -43,3 +43,7 @@ next-env.d.ts
 # local environment
 .env
 .env.local
+
+# build output
+/out/
+*.zip

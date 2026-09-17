@@ -104,6 +104,13 @@ function toWork(a: WpArt, taken: Set<string>): Work | null {
 
 /** Fetches the catalogue in the order WordPress hangs it. */
 export async function getWorks(): Promise<Work[]> {
+  // A static export has no server to re-read WordPress later, and it is
+  // usually the thing sitting on the domain WordPress used to occupy — so
+  // pointing its images back at that domain would break them. It uses the
+  // snapshot instead, whose photographs are served from the site itself.
+  // `npm run sync` is what brings that snapshot up to date.
+  if (process.env.STATIC_EXPORT === "1") return fallbackWorks;
+
   try {
     const res = await fetch(
       `${WP}/wp-json/wp/v2/art?per_page=100&_embed=wp:featuredmedia&orderby=menu_order&order=asc`,
