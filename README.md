@@ -118,7 +118,35 @@ what it changes.
 
 ## Deploying
 
-The site is a standard Next.js app — `vercel` or a GitHub import both
-work, with no configuration. Pointing `abidkhanart.com` at it is a DNS
-change at the registrar; the WordPress site stays untouched until that
-record moves.
+The site is a standard Next.js app and needs a Node runtime — it renders
+on the server so it can read WordPress and resize the photographs. On
+Hostinger that means a **Business or Cloud Startup** plan, which run
+Node.js web apps from a GitHub repository. A plain shared/Premium plan
+cannot run it.
+
+### Order matters
+
+WordPress currently occupies `abidkhanart.com`, and this site reads its
+catalogue from there. Pointing the domain at the new site before moving
+WordPress takes the CMS offline and the gallery falls back to its
+snapshot. So:
+
+1. **Move WordPress to a subdomain.** In hPanel create
+   `cms.abidkhanart.com` and point the existing WordPress install at it.
+   Check `https://cms.abidkhanart.com/wp-json/wp/v2/art` returns JSON.
+2. **Push this repo to GitHub.**
+3. **Create the Node.js app in hPanel** from that repository.
+   Build: `npm run build`. Start: `npm start`. Node 20 or newer.
+4. **Set `WORDPRESS_URL=https://cms.abidkhanart.com`** in the app's
+   environment variables, and redeploy so the image host updates too.
+5. **Point `abidkhanart.com` at the Node app.** Only now — once steps 1
+   and 4 are done and verified.
+
+### Checking it worked
+
+- The works page should show paintings served from
+  `cms.abidkhanart.com/wp-content/uploads/...`
+- Add a painting in WordPress; it should appear within five minutes.
+- The deploy log should *not* contain
+  `[wordpress] falling back to the committed catalogue` — that line means
+  the site could not reach the CMS and is serving the snapshot.
