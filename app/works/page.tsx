@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import Reveal from "@/components/Reveal";
-import WorkLink from "@/components/WorkLink";
+import WorkRow, { toRows } from "@/components/WorkRow";
 import { works } from "@/content/works";
-import { gridClass, sizesFor } from "@/lib/grid";
 
 export const metadata: Metadata = {
   title: "Works",
@@ -11,6 +10,8 @@ export const metadata: Metadata = {
 };
 
 export default function WorksPage() {
+  const rows = toRows(works, 2);
+
   return (
     <section className="px-[var(--gutter)] pt-[28vh] sm:pt-[32vh]">
       <Reveal>
@@ -22,15 +23,10 @@ export default function WorksPage() {
         </p>
       </Reveal>
 
-      <div className="mt-20 grid grid-cols-12 gap-x-6 gap-y-16 sm:mt-32 sm:gap-y-32">
-        {works.map((work, i) => (
-          <Reveal key={work.slug} className={gridClass(work.span, i)}>
-            <WorkLink
-              work={work}
-              sizes={sizesFor(work.span)}
-              priority={i < 2}
-              full={work.span === "full" || work.span === "wide"}
-            />
+      <div className="mt-20 flex flex-col gap-y-16 sm:mt-32 sm:gap-y-28">
+        {rows.map((row, i) => (
+          <Reveal key={row[0].slug}>
+            <WorkRow works={row} priority={i === 0} />
           </Reveal>
         ))}
       </div>

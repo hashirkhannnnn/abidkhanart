@@ -12,14 +12,10 @@
  * `tone` is the colour held behind the photograph while it loads, sampled
  * from the painting itself, so a page never flashes white.
  *
- * `span` sets how much of the row a work takes in the index:
- *   "full"   — edge to edge, alone on its row
- *   "wide"   — two thirds
- *   "half"   — half
- *   "narrow" — a small inset column
+ * The index hangs two works to a row at a common height, dividing each row
+ * in proportion to the shapes in it — so `width` and `height` below are what
+ * decide how much of a row a painting takes. Nothing is cropped.
  */
-
-export type Span = "full" | "wide" | "half" | "narrow";
 
 export type Work = {
   slug: string;
@@ -33,7 +29,6 @@ export type Work = {
   width: number;
   height: number;
   tone: string;
-  span: Span;
   /** Shown on the home page. Aim for 6–8. */
   featured?: boolean;
   /** Paragraphs shown on the work's own page. Optional. */
@@ -51,7 +46,6 @@ export const works: Work[] = [
     width: 922,
     height: 1253,
     tone: "#869989",
-    span: "half",
     featured: true,
   },
   {
@@ -64,7 +58,6 @@ export const works: Work[] = [
     width: 1200,
     height: 897,
     tone: "#6a8789",
-    span: "half",
     featured: true,
   },
   {
@@ -77,7 +70,6 @@ export const works: Work[] = [
     width: 897,
     height: 1200,
     tone: "#9c9461",
-    span: "half",
     featured: true,
   },
   {
@@ -90,7 +82,6 @@ export const works: Work[] = [
     width: 776,
     height: 1031,
     tone: "#7e98ab",
-    span: "half",
   },
   {
     slug: "the-language-of-wildflowers",
@@ -102,7 +93,6 @@ export const works: Work[] = [
     width: 870,
     height: 1200,
     tone: "#6f858a",
-    span: "narrow",
     featured: true,
   },
   {
@@ -115,7 +105,6 @@ export const works: Work[] = [
     width: 1600,
     height: 1098,
     tone: "#91a490",
-    span: "half",
     featured: true,
   },
   {
@@ -128,7 +117,6 @@ export const works: Work[] = [
     width: 890,
     height: 1200,
     tone: "#748279",
-    span: "half",
   },
   {
     slug: "winters-quiet-river",
@@ -140,7 +128,6 @@ export const works: Work[] = [
     width: 846,
     height: 1200,
     tone: "#788b9b",
-    span: "half",
     featured: true,
   },
   {
@@ -153,7 +140,6 @@ export const works: Work[] = [
     width: 1200,
     height: 962,
     tone: "#667e66",
-    span: "half",
   },
   {
     slug: "village-in-passing-light",
@@ -165,7 +151,6 @@ export const works: Work[] = [
     width: 914,
     height: 1200,
     tone: "#7c859c",
-    span: "narrow",
   },
   {
     slug: "the-earth-speaks-softly",
@@ -177,7 +162,6 @@ export const works: Work[] = [
     width: 889,
     height: 1200,
     tone: "#7892a0",
-    span: "half",
   },
   {
     slug: "quiet-growth",
@@ -189,7 +173,6 @@ export const works: Work[] = [
     width: 885,
     height: 1200,
     tone: "#857e73",
-    span: "half",
   },
   {
     slug: "breath-of-early-summer",
@@ -201,7 +184,6 @@ export const works: Work[] = [
     width: 1407,
     height: 1049,
     tone: "#808d77",
-    span: "wide",
   },
   {
     slug: "silence-in-motion",
@@ -213,7 +195,6 @@ export const works: Work[] = [
     width: 877,
     height: 1200,
     tone: "#7a8895",
-    span: "half",
   },
   {
     slug: "where-days-move-slowly",
@@ -225,7 +206,6 @@ export const works: Work[] = [
     width: 1035,
     height: 1200,
     tone: "#89ab9b",
-    span: "narrow",
   },
   {
     slug: "a-landscape-holding-breath",
@@ -237,7 +217,6 @@ export const works: Work[] = [
     width: 450,
     height: 515,
     tone: "#6c8c88",
-    span: "narrow",
   },
   {
     slug: "cold-breeze-night",
@@ -249,7 +228,6 @@ export const works: Work[] = [
     width: 1200,
     height: 896,
     tone: "#577ba0",
-    span: "half",
     featured: true,
   },
   {
@@ -262,7 +240,6 @@ export const works: Work[] = [
     width: 897,
     height: 1200,
     tone: "#809795",
-    span: "half",
   },
   {
     slug: "lillies",
@@ -274,7 +251,6 @@ export const works: Work[] = [
     width: 1200,
     height: 881,
     tone: "#7d7594",
-    span: "wide",
   },
   {
     slug: "field-of-unspoken-colors",
@@ -286,7 +262,6 @@ export const works: Work[] = [
     width: 1200,
     height: 1024,
     tone: "#98a2a7",
-    span: "half",
   },
   {
     slug: "held-by-the-season",
@@ -298,7 +273,6 @@ export const works: Work[] = [
     width: 900,
     height: 1200,
     tone: "#738c7b",
-    span: "half",
   },
   {
     slug: "stillness",
@@ -310,7 +284,6 @@ export const works: Work[] = [
     width: 1200,
     height: 873,
     tone: "#516796",
-    span: "full",
   },
   {
     slug: "day-after-rain",
@@ -322,7 +295,6 @@ export const works: Work[] = [
     width: 876,
     height: 1200,
     tone: "#85828d",
-    span: "half",
   },
   {
     slug: "untitled",
@@ -334,7 +306,6 @@ export const works: Work[] = [
     width: 1200,
     height: 888,
     tone: "#949a9b",
-    span: "half",
   },
   {
     slug: "a-landscape-holding-breath1",
@@ -346,7 +317,6 @@ export const works: Work[] = [
     width: 1200,
     height: 893,
     tone: "#758f8e",
-    span: "wide",
   },
   {
     slug: "nature-uninterrupted",
@@ -358,7 +328,6 @@ export const works: Work[] = [
     width: 285,
     height: 244,
     tone: "#6d8b83",
-    span: "narrow",
   },
   {
     slug: "village-beneath-the-clouds",
@@ -370,7 +339,6 @@ export const works: Work[] = [
     width: 285,
     height: 202,
     tone: "#80928a",
-    span: "narrow",
   },];
 
 /* ── helpers ─────────────────────────────────────────────────── */

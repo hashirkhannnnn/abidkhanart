@@ -35,12 +35,16 @@ Everything a visitor reads is in two files. No CMS, no database.
 4. Fill in `year` and `dimensions`. Leave them empty and they are simply
    left off the wall label.
 
-### How a work sits in the grid
+### How the index is laid out
 
-`span` controls the index layout: `"full"`, `"wide"`, `"half"` or
-`"narrow"`. Mixing them is what keeps the index from looking like a
-spreadsheet. `featured: true` puts a work on the home page — six show
-there, so keep six to eight flagged.
+Two paintings to a row, hung at a common height. Each row divides itself
+in proportion to the shapes in it, so a wide canvas takes more of the row
+than a tall one — tops, bottoms and wall labels all line up, and nothing
+is cropped. This falls out of each work's `width` and `height`, so there
+is nothing to configure.
+
+`featured: true` puts a work on the home page — six show there, so keep
+six to eight flagged.
 
 ## Design notes
 
