@@ -20,6 +20,15 @@
   /* the fixed header's height — content that must clear it uses this */
   --header-h: 4.25rem;
 
+  /* How tall a painting hangs in the index. Every work in every row is set
+     to this height and takes its width from its own shape, so the whole
+     catalogue sits on one line — change this single number to hang the
+     work larger or smaller. */
+  --row-h: clamp(15rem, 42vh, 25rem);
+
+  /* The tallest a single painting is shown on its own page. */
+  --plate-h: 58vh;
+
   /* page gutter — generous, and it scales with the viewport */
   --gutter: clamp(1.25rem, 5vw, 6rem);
   /* vertical rhythm between major sections */

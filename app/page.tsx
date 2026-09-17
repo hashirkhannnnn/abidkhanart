@@ -10,7 +10,7 @@ export default function Home() {
     <>
       {/* Opening plate — full bleed, uncaptioned, the way a room is
           entered before anything is read. */}
-      <section className="h-[clamp(62vh,80vh,54rem)] w-full pt-[var(--header-h)]">
+      <section className="h-[clamp(52vh,70vh,46rem)] w-full pt-[var(--header-h)]">
         <Plate
           src={plates.hero.src}
           alt="Painting by Abid Khan"
@@ -69,7 +69,7 @@ export default function Home() {
 
       {/* A second full-bleed painting, as a pause between rooms. */}
       <section
-        className="h-[clamp(45vh,62vh,40rem)] w-full"
+        className="h-[clamp(38vh,52vh,34rem)] w-full"
         style={{ marginBlock: "var(--section)" }}
       >
         <Plate

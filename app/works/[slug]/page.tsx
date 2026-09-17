@@ -42,7 +42,7 @@ export default async function WorkPage({ params }: Params) {
       <div
         className="mx-auto w-full"
         style={{
-          maxWidth: `min(100%, max(30rem, calc(74vh * ${work.width} / ${work.height})))`,
+          maxWidth: `min(100%, max(26rem, calc(var(--plate-h) * ${work.width} / ${work.height})))`,
         }}
       >
       <Reveal>
