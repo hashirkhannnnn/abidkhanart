@@ -25,9 +25,6 @@ export default function Header() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // Close the menu whenever navigation happens.
-  useEffect(() => setMenuOpen(false), [pathname]);
-
   // Hold the page still behind the open menu, and let Escape close it.
   useEffect(() => {
     if (!menuOpen) return;
@@ -56,7 +53,11 @@ export default function Header() {
         className="flex items-baseline justify-between py-5"
         style={{ paddingInline: "var(--gutter)" }}
       >
-        <Link href="/" className="label link-quiet shrink-0">
+        <Link
+          href="/"
+          onClick={() => setMenuOpen(false)}
+          className="label link-quiet shrink-0"
+        >
           {site.name}
         </Link>
 
@@ -101,6 +102,7 @@ export default function Header() {
               key={item.href}
               href={item.href}
               aria-current={isCurrent(item.href) ? "page" : undefined}
+              onClick={() => setMenuOpen(false)}
               className="display text-[clamp(2.5rem,13vw,4rem)] aria-[current=page]:text-muted"
             >
               {item.label}
