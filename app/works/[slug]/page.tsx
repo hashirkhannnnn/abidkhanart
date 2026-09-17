@@ -3,18 +3,18 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import Viewer from "@/components/Viewer";
 import Reveal from "@/components/Reveal";
-import { getNeighbours, getWork, works } from "@/content/works";
+import { getNeighbours, getWork, getWorks } from "@/lib/wordpress";
 import { site } from "@/content/site";
 
 type Params = { params: Promise<{ slug: string }> };
 
-export function generateStaticParams() {
-  return works.map((w) => ({ slug: w.slug }));
+export async function generateStaticParams() {
+  return (await getWorks()).map((w) => ({ slug: w.slug }));
 }
 
 export async function generateMetadata({ params }: Params): Promise<Metadata> {
   const { slug } = await params;
-  const work = getWork(slug);
+  const work = await getWork(slug);
   if (!work) return {};
   const detail = [work.medium, work.dimensions, work.year].filter(Boolean).join(", ");
   return {
@@ -26,10 +26,10 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
 
 export default async function WorkPage({ params }: Params) {
   const { slug } = await params;
-  const work = getWork(slug);
+  const [work, works] = await Promise.all([getWork(slug), getWorks()]);
   if (!work) notFound();
 
-  const { prev, next } = getNeighbours(slug);
+  const { prev, next } = await getNeighbours(slug);
   const details = [work.year, work.medium, work.dimensions].filter(Boolean);
 
   return (

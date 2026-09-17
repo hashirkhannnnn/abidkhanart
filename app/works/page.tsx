@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Reveal from "@/components/Reveal";
 import WorkRow, { toRows } from "@/components/WorkRow";
-import { works } from "@/content/works";
+import { getWorks } from "@/lib/wordpress";
 
 export const metadata: Metadata = {
   title: "Works",
@@ -9,7 +9,8 @@ export const metadata: Metadata = {
     "The catalogue of paintings by Abid Khan — oil on canvas landscapes of northern Pakistan.",
 };
 
-export default function WorksPage() {
+export default async function WorksPage() {
+  const works = await getWorks();
   const rows = toRows(works, 2);
 
   return (

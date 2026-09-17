@@ -4,9 +4,11 @@ import Plate from "@/components/Plate";
 import Reveal from "@/components/Reveal";
 import WorkRow, { toRows } from "@/components/WorkRow";
 import { site, plates } from "@/content/site";
-import { featuredWorks, works } from "@/content/works";
+import { getFeatured, getWorks } from "@/lib/wordpress";
 
-export default function Home() {
+export default async function Home() {
+  const [works, featured] = await Promise.all([getWorks(), getFeatured(6)]);
+
   return (
     <>
       {/* Opening plate — full bleed, uncaptioned, the way a room is
@@ -45,7 +47,7 @@ export default function Home() {
         </Reveal>
 
         <div className="mt-12 flex flex-col gap-y-16 sm:mt-20 sm:gap-y-28">
-          {toRows(featuredWorks.slice(0, 6), 2).map((row, i) => (
+          {toRows(featured, 2).map((row, i) => (
             <Reveal key={row[0].slug}>
               <WorkRow works={row} priority={i === 0} />
             </Reveal>
