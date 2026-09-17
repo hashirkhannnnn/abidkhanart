@@ -1,0 +1,176 @@
+@import "tailwindcss";
+
+/* ── Design tokens ───────────────────────────────────────────────
+   Colours are warm and paper-like, never pure white or pure black:
+   gallery walls are bone, and ink on paper is #17 not #00.
+   Every utility (bg-paper, text-ink…) reads these variables, so the
+   dark-mode blocks below re-point the same tokens and the whole site
+   follows without a single dark: variant.                          */
+@theme {
+  --color-paper: #f6f5f2;
+  --color-paper-raised: #fbfaf8;
+  --color-ink: #171614;
+  --color-muted: #86827a;
+  --color-rule: #e3e0d9;
+  --color-accent: #8a5a3c;
+
+  --font-display: var(--font-cormorant), "Times New Roman", serif;
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+
+  /* the fixed header's height — content that must clear it uses this */
+  --header-h: 4.25rem;
+
+  /* page gutter — generous, and it scales with the viewport */
+  --gutter: clamp(1.25rem, 5vw, 6rem);
+  /* vertical rhythm between major sections */
+  --section: clamp(5rem, 14vh, 11rem);
+
+  --ease-gallery: cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --color-paper: #121211;
+    --color-paper-raised: #1a1a18;
+    --color-ink: #ecebe6;
+    --color-muted: #8b877f;
+    --color-rule: #2a2926;
+    --color-accent: #c08f6a;
+  }
+}
+
+:root[data-theme="dark"] {
+  --color-paper: #121211;
+  --color-paper-raised: #1a1a18;
+  --color-ink: #ecebe6;
+  --color-muted: #8b877f;
+  --color-rule: #2a2926;
+  --color-accent: #c08f6a;
+}
+
+html {
+  background-color: var(--color-paper);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  font-size: 0.9375rem;
+  line-height: 1.7;
+  /* stops the layout shifting sideways when a page is short enough
+     to lose its scrollbar */
+  scrollbar-gutter: stable;
+}
+
+::selection {
+  background-color: var(--color-ink);
+  color: var(--color-paper);
+}
+
+/* Keyboard focus only — visible, and in the site's own ink */
+:focus-visible {
+  outline: 1px solid var(--color-ink);
+  outline-offset: 4px;
+}
+
+/* ── Type ────────────────────────────────────────────────────────
+   Two voices only: a light serif for anything large, and a small
+   tracked grotesk for everything a visitor scans rather than reads. */
+
+.display {
+  font-family: var(--font-display);
+  font-weight: 300;
+  line-height: 0.96;
+  letter-spacing: -0.015em;
+  text-wrap: balance;
+}
+
+/* Wall-label / navigation type. Small, spaced, quiet. */
+.label {
+  font-size: 0.6875rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.prose-gallery p {
+  max-width: 38ch;
+  text-wrap: pretty;
+}
+
+/* A link that underlines from the left on hover, slowly. */
+.link-quiet {
+  position: relative;
+  display: inline-block;
+}
+.link-quiet::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -0.15em;
+  height: 1px;
+  width: 100%;
+  background-color: currentColor;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.55s var(--ease-gallery);
+}
+.link-quiet:hover::after,
+.link-quiet:focus-visible::after {
+  transform: scaleX(1);
+}
+/* Current page: leave the rule drawn. */
+.link-quiet[aria-current="page"]::after {
+  transform: scaleX(1);
+  background-color: var(--color-muted);
+}
+
+/* ── Scroll reveal ───────────────────────────────────────────────
+   Elements start lowered and faint; Reveal.tsx adds .is-visible. */
+.reveal {
+  opacity: 0;
+  transform: translateY(14px);
+  transition:
+    opacity 1s var(--ease-gallery),
+    transform 1s var(--ease-gallery);
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* Images breathe in rather than snapping on. */
+.plate img {
+  transition:
+    opacity 1.1s var(--ease-gallery),
+    transform 1.4s var(--ease-gallery);
+}
+.plate[data-loaded="false"] img {
+  opacity: 0;
+}
+a:hover .plate img {
+  transform: scale(1.018);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .plate img,
+  .link-quiet::after {
+    transition: none;
+  }
+  a:hover .plate img {
+    transform: none;
+  }
+}
