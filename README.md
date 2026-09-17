@@ -37,15 +37,17 @@ Everything a visitor reads is in two files. No CMS, no database.
 
 ### How the index is laid out
 
-Two paintings to a row, every work in the catalogue hung at the same
-height and taking its width from its own shape — so a wide canvas is
-wider than a tall one and the whole index sits on a single line, the way
-work is hung on a wall. Tops, bottoms and wall labels line up, and
-nothing is cropped.
+Two paintings to a row, hung at a common height. Each row divides itself
+in proportion to the shapes in it, so a wide canvas takes more of the row
+than a tall one — tops, bottoms and wall labels all line up, and nothing
+is cropped. This falls out of each work's `width` and `height`, so there
+is nothing to set per painting.
 
-To hang the work larger or smaller, change one number — `--row-h` in
-`app/globals.css`. `--plate-h` beside it does the same for a painting on
-its own page.
+To hang the work larger or smaller, change one number: `--row-w` in
+`app/globals.css`, the share of the page a row takes. The proportions
+inside a row are untouched by it, so the whole catalogue scales evenly
+and the alignment is unaffected. `--plate-h` beside it does the same for
+a painting on its own page.
 
 `featured: true` puts a work on the home page — six show there, so keep
 six to eight flagged.

@@ -4,18 +4,19 @@ import type { Work } from "@/content/works";
 /**
  * A row of paintings hung at a common height.
  *
- * Every work in the catalogue is shown at the same height — `--row-h` — and
- * takes its width from its own shape, so a wide canvas is wider than a tall
- * one and the whole index sits on a single line, the way work is hung on a
- * wall. Nothing is cropped, and the wall labels start at the same baseline
- * because the paintings above them end at the same one.
+ * Each painting is given a flex-grow equal to its own aspect ratio, so the
+ * row divides itself in proportion to the shapes in it: a wide canvas takes
+ * more of the row than a tall one, and because every width is then that
+ * painting's own ratio times a single shared height, the tops and bottoms
+ * line up exactly — without cropping anything. The wall labels start at the
+ * same baseline for the same reason.
  *
- * Rows are centred rather than justified: forcing each row to fill the page
- * would mean a row of two tall canvases appeared at a different scale from a
- * row of two wide ones, which is the thing a shared height is there to avoid.
+ * The row is held to `--row-w` of the page and centred, which is what sets
+ * the scale of the hang: the proportions inside the row are untouched, so
+ * narrowing it shrinks every painting evenly and the alignment is unaffected.
  *
  * Below the small breakpoint the row stacks and each painting takes the full
- * width, so the sizing applies only from `sm` up.
+ * width, so the flex sizing is applied only from `sm` up.
  */
 export default function WorkRow({
   works,
@@ -24,21 +25,23 @@ export default function WorkRow({
   works: Work[];
   priority?: boolean;
 }) {
+  const ratios = works.map((w) => w.width / w.height);
+  const total = ratios.reduce((a, b) => a + b, 0);
+
   return (
-    <div className="flex flex-col items-start gap-y-14 sm:flex-row sm:items-start sm:justify-center sm:gap-x-10">
-      {works.map((work) => (
+    <div className="flex flex-col gap-y-14 sm:mx-auto sm:w-[var(--row-w)] sm:flex-row sm:items-start sm:gap-x-8">
+      {works.map((work, i) => (
         <div
           key={work.slug}
-          style={{ "--ar": work.width / work.height } as React.CSSProperties}
-          className="w-full min-w-0 shrink sm:w-[calc(var(--row-h)*var(--ar))]"
+          style={{ "--grow": ratios[i] } as React.CSSProperties}
+          className="min-w-0 sm:[flex-basis:0] sm:[flex-grow:var(--grow)]"
         >
           <WorkLink
             work={work}
-            /* Roughly how wide this renders: the row height is a share of the
-               viewport height, so express the width the same way. */
+            /* This work's share of a row that is itself ~84% of the page. */
             sizes={`(max-width: 640px) 100vw, ${Math.round(
-              42 * (work.width / work.height),
-            )}vh`}
+              (ratios[i] / total) * 84,
+            )}vw`}
             priority={priority}
             full
           />
