@@ -57,6 +57,12 @@ six to eight flagged.
 - Each painting's dominant colour is stored as `tone` and held behind the
   photograph while it loads, so pages never flash white.
 - Motion is slow and stops entirely under `prefers-reduced-motion`.
+- Each painting's own page has a loupe: moving a cursor across the canvas
+  opens a circular window onto the full-resolution file, for reading the
+  brushwork. It caps itself at the photograph's native pixels rather than
+  enlarging softness, so how much it can show depends entirely on the
+  resolution of the photograph — another reason to swap in the high-res
+  scans. It is off on touch screens, which have no hover.
 
 ## Still to do
 

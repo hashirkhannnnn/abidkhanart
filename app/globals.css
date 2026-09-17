@@ -174,3 +174,42 @@ a:hover .plate img {
     transform: none;
   }
 }
+
+/* ── The loupe ───────────────────────────────────────────────────
+   A circular window onto the full-resolution photograph, following the
+   cursor across a painting. Positioned by transform only, so moving it
+   never costs a layout. */
+.loupe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 10;
+  border-radius: 9999px;
+  background-repeat: no-repeat;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s var(--ease-gallery);
+  will-change: transform;
+  /* A pale rim and a soft drop, so the lens reads as glass held over the
+     canvas rather than a hole cut out of it. */
+  box-shadow:
+    0 0 0 2px color-mix(in srgb, var(--color-paper) 85%, transparent),
+    0 0 0 3px color-mix(in srgb, var(--color-ink) 22%, transparent),
+    0 26px 60px -18px rgb(0 0 0 / 0.55);
+}
+
+.loupe-host[data-active="true"] .loupe {
+  opacity: 1;
+}
+
+/* The lens sits exactly under the pointer, so it becomes the pointer. */
+.loupe-host[data-active="true"] {
+  cursor: none;
+}
+
+/* No hover, no loupe — and no dangling hint about one. */
+@media (hover: none), (pointer: coarse) {
+  .loupe-hint {
+    display: none;
+  }
+}
