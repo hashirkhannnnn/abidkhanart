@@ -1,4 +1,5 @@
 import Link from "next/link";
+import HeroPlates from "@/components/HeroPlates";
 import Plate from "@/components/Plate";
 import Reveal from "@/components/Reveal";
 import WorkRow, { toRows } from "@/components/WorkRow";
@@ -11,16 +12,7 @@ export default function Home() {
       {/* Opening plate — full bleed, uncaptioned, the way a room is
           entered before anything is read. */}
       <section className="h-[clamp(52vh,70vh,46rem)] w-full pt-[var(--header-h)]">
-        <Plate
-          src={plates.hero.src}
-          alt="Painting by Abid Khan"
-          width={plates.hero.width}
-          height={plates.hero.height}
-          tone={plates.hero.tone}
-          sizes="100vw"
-          priority
-          cover
-        />
+        <HeroPlates paintings={plates.hero} />
       </section>
 
       {/* The name, set large, on paper rather than over the painting. */}

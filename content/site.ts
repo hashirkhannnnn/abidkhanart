@@ -140,7 +140,15 @@ export const education = [
  * (public/paintings/) that are not yet in the titled catalogue.
  */
 export const plates = {
-  hero: { src: "/paintings/p01.jpg", width: 2400, height: 1793, tone: "#89929c" },
+  /**
+   * The opening plate slowly gives way to the next, and round again.
+   * Reduce this to a single entry and it simply holds still.
+   */
+  hero: [
+    { src: "/paintings/p01.jpg", width: 2400, height: 1793, tone: "#89929c" },
+    { src: "/paintings/p19.jpg", width: 2400, height: 1788, tone: "#82979e" },
+    { src: "/paintings/p28.jpg", width: 2400, height: 1806, tone: "#677a95" },
+  ],
   interstitial: { src: "/paintings/p25.jpg", width: 2400, height: 1433, tone: "#597a9f" },
   about: { src: "/paintings/p13.jpg", width: 1790, height: 2400, tone: "#8c95a4" },
   contact: { src: "/paintings/p16.jpg", width: 2400, height: 1820, tone: "#94889d" },

@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import Loupe from "@/components/Loupe";
-import Plate from "@/components/Plate";
+import Viewer from "@/components/Viewer";
 import Reveal from "@/components/Reveal";
 import { getNeighbours, getWork, works } from "@/content/works";
 import { site } from "@/content/site";
@@ -46,17 +45,7 @@ export default async function WorkPage({ params }: Params) {
         }}
       >
       <Reveal>
-        <Loupe src={work.image} naturalWidth={work.width}>
-          <Plate
-            src={work.image}
-            alt={`${work.title} — ${work.medium} by ${site.name}`}
-            width={work.width}
-            height={work.height}
-            tone={work.tone}
-            sizes="(max-width: 640px) 100vw, 80vw"
-            priority
-          />
-        </Loupe>
+        <Viewer work={work} works={works} />
       </Reveal>
 
       {/* Wall label */}
@@ -69,8 +58,10 @@ export default async function WorkPage({ params }: Params) {
             {details.length > 0 && (
               <p className="label mt-4 text-muted">{details.join(" · ")}</p>
             )}
-            <p className="loupe-hint label mt-3 text-muted opacity-60">
-              Move across the painting to look closer
+            <p className="label mt-3 text-muted opacity-60">
+              <span className="loupe-hint">Move across to look closer</span>
+              <span className="loupe-hint mx-2 opacity-50">·</span>
+              Click to enlarge
             </p>
           </div>
 

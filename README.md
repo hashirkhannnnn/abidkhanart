@@ -63,6 +63,14 @@ six to eight flagged.
 - Each painting's dominant colour is stored as `tone` and held behind the
   photograph while it loads, so pages never flash white.
 - Motion is slow and stops entirely under `prefers-reduced-motion`.
+- The opening plate on the home page holds for seven seconds before
+  slowly giving way to the next painting and round again. There are no
+  dots or arrows — it is meant to read as a change of light. Reduce
+  `plates.hero` in `content/site.ts` to one entry and it holds still;
+  reduced-motion does the same automatically.
+- Clicking a painting on its own page opens it full screen on a dark
+  ground, where arrow keys page through the whole catalogue and Escape
+  closes it.
 - Each painting's own page has a loupe: moving a cursor across the canvas
   opens a circular window onto the full-resolution file, for reading the
   brushwork. It caps itself at the photograph's native pixels rather than
